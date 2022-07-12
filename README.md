@@ -2,7 +2,7 @@
 
 A very simple JS package for form validation.
 
-- Framework agnostic.
+- JS Framework agnostic.
 - UI-less.
 - Maximum flexibility.
 
@@ -64,6 +64,40 @@ if (fields.email.touched) {
   console.log("The email field is has been edited.");
 }
 ```
+
+## Update Multiple Fields
+```js
+this.form.updateAll({ 
+  email: 'email@address.com',  
+  fullname: 'Email Address' 
+});
+```
+
+## Update Validation For A Field
+```js
+this.form.updateAll({ 
+  email: {value: 'newemail@value.com', validator: null}
+});
+```
+
+## Add Or Remove A Field
+```js
+// Add
+this.form.addField('fieldName', {value: '', validator: null});
+
+// Remove
+this.form.removeField('fieldName');
+```
+Fields can also be removed from a sub form group by specifying an index number as the second parameter.
+```js
+this.form.removeField('Sub-Form-Group-Name', 2);
+```
+
+## Reset Form Fields
+```js
+this.form.resetAll();
+```
+
 
 ## License
 
