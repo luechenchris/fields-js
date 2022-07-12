@@ -40,9 +40,11 @@ let fields: {
     }],
   },
 };
+
+// Initialize Fields-JS
 this.form = new Form(fields);
 
-// Update a fields value.
+// Update a field's value.
 this.form.update('email', 'johndoe@mail.com');
 
 // Validate the entire form.
