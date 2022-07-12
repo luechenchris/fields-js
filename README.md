@@ -44,14 +44,14 @@ let fields: {
 // Initialize Fields-JS
 this.form = new Form(fields);
 
-// Update a field's value.
-this.form.update('email', 'johndoe@mail.com');
-
 // Validate the entire form.
 let { form, valid } = this.form.value();
 
 // Update scoped variable (not necessary but it's nice to do.)
 fields = form;
+
+// Update a field's value.
+fields = this.form.update('email', 'johndoe@mail.com');
 
 if (valid ) { 
   console.log("The Form is valid.")
