@@ -2,7 +2,7 @@
   "name": "fields-js",
   "version": "1.0.0",
   "description": "A very simple JS validation module.",
-  "main": "index.js",
+  "main": "/lib/commonjs/index.js",
   "scripts": {
     "test": "jest",
     "typescript": "tsc -p tsconfig.json && tsc -p tsconfig-ts.json",
@@ -14,7 +14,7 @@
     "validation",
     "form"
   ],
-  "author": "luechenchris@gmail.com",
+  "author": "Luechen Christopher <luechenchris@gmail.com> (https://github.com/luechenchris)",
   "license": "ISC",
   "devDependencies": {
     "@types/jest": "^28.1.4",
@@ -29,12 +29,10 @@
     "testRegex": "(/__tests__/.*|(\\.|/)(test|spec))\\.(jsx?|tsx?)$",
     "moduleFileExtensions": ["ts", "tsx", "js", "jsx", "json", "node"],
     "modulePathIgnorePatterns": [
-      "<rootDir>/example/node_modules",
       "<rootDir>/lib/"
     ]
   },
   "files": [
-    "src",
-    "lib"
+    "lib/"
   ]
 }
