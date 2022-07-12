@@ -49,7 +49,10 @@ this.form.update('email', 'johndoe@mail.com');
 
 // Validate the entire form.
 let { form, valid } = this.form.value();
+
+// Update scoped variable (not necessary but it's nice to do.)
 fields = form;
+
 if (valid ) { 
   console.log("The Form is valid.")
 } else {
