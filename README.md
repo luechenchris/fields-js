@@ -19,7 +19,7 @@ yarn add fields-js
 ```js
 import Form from 'fields-js';
 
-// Define your form fields.
+// Define your form fields. You can also save the object to state.
 let fields: {
   email: {
     value: '',
@@ -72,7 +72,7 @@ if (fields.email.touched) {
 
 ## Update Multiple Fields
 ```js
-this.form.updateAll({ 
+fields = this.form.updateAll({ 
   email: 'email@address.com',  
   fullname: 'Email Address' 
 });
@@ -80,7 +80,7 @@ this.form.updateAll({
 
 ## Update Validation For A Field
 ```js
-this.form.updateAll({ 
+fields = this.form.updateAll({ 
   email: {value: 'newemail@value.com', validator: null}
 });
 ```
@@ -88,19 +88,19 @@ this.form.updateAll({
 ## Add Or Remove A Field
 ```js
 // Add
-this.form.addField('fieldName', {value: '', validator: null});
+fields = this.form.addField('fieldName', {value: '', validator: null});
 
 // Remove
-this.form.removeField('fieldName');
+fields = this.form.removeField('fieldName');
 ```
 Fields can also be removed from a sub form group by specifying an index number as the second parameter.
 ```js
-this.form.removeField('Sub-Form-Group-Name', 2);
+fields = this.form.removeField('Sub-Form-Group-Name', 2);
 ```
 
 ## Reset Form Fields
 ```js
-this.form.resetAll();
+fields = this.form.resetAll();
 ```
 
 
