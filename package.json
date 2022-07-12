@@ -14,11 +14,17 @@
     "validation",
     "form"
   ],
+  "repository": "https://github.com/luechenchris/fields-js",
   "author": "Luechen Christopher <luechenchris@gmail.com> (https://github.com/luechenchris)",
   "license": "ISC",
+  "publishConfig": {
+    "registry": "https://registry.npmjs.org/",
+    "access": "public"
+  },
   "devDependencies": {
     "@types/jest": "^28.1.4",
     "jest": "^28.1.2",
+    "release-it": "^15.1.1",
     "ts-jest": "^28.0.5",
     "typescript": "^4.7.4"
   },
@@ -27,12 +33,31 @@
       "^.+\\.(t|j)sx?$": "ts-jest"
     },
     "testRegex": "(/__tests__/.*|(\\.|/)(test|spec))\\.(jsx?|tsx?)$",
-    "moduleFileExtensions": ["ts", "tsx", "js", "jsx", "json", "node"],
+    "moduleFileExtensions": [
+      "ts",
+      "tsx",
+      "js",
+      "jsx",
+      "json",
+      "node"
+    ],
     "modulePathIgnorePatterns": [
       "<rootDir>/lib/"
     ]
   },
   "files": [
     "lib/"
-  ]
+  ],
+  "release-it": {
+    "git": {
+      "commitMessage": "chore: release ${version}",
+      "tagName": "v${version}"
+    },
+    "npm": {
+      "publish": true
+    },
+    "github": {
+      "release": true
+    }
+  }
 }
