@@ -8,9 +8,9 @@ const emailRegex = new RegExp(
  * Form validator.
  */
 export default class Form {
-  private formData: {[s: string]: any};
+  private formData: { [s: string]: any };
 
-  constructor(data: {[s: string]: any}) {
+  constructor(data: { [s: string]: any }) {
     this.formData = data;
   }
 
@@ -70,10 +70,14 @@ export default class Form {
    */
   private evaluateField = (form: any, fieldName: string, tested: any = null) => {
     const testValues: Array<any> = tested;
-    const validators: Array<any> = form[fieldName].validator;
     form[fieldName]['touched'] = true;
-    if (Array.isArray(validators)) {
+    if (isDefined(form[fieldName].validator)) {
       let testValue: Array<any> = [];
+      let validators: Array<any> = form[fieldName].validator;
+      if (!Array.isArray(validators)) {
+        // Force validators variable to contain an array
+        validators = [validators];
+      }
       validators.forEach((i: any) => {
         if (typeof i !== 'string') {
           if (typeof i == 'function') {

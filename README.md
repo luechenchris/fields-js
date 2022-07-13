@@ -43,51 +43,58 @@ let fields = {
 
 // Initialize Fields-JS
 this.form = new Form(fields);
+```
 
-// Update a field's value.
+## Update A Field's Value.
+```js
+// Update scoped variable (not necessary but it's great for mutating state)
 fields = this.form.update('email', 'johndoe@mail.com');
+```
 
-// Validate the entire form.
+## Validate The Form.
+```js
 let { form, valid } = this.form.value();
 
-// Update scoped variable (not necessary but it's nice to do.)
+// Update scoped variable
 fields = form;
 
 if (valid ) { 
-  console.log("The Form is valid.")
+  console.log("The Form is valid.");
 } else {
-  console.log("The Form is has validation errors.")
+  console.log("The Form has validation errors.");
 }
+```
 
-// Check validation status of individual form fields.
+## Check Validation Status Of A Form Field.
+```js
 if (fields.email.valid) {
   console.log("The email field is valid.");
 }
 
 // Check pristine status of individual form fields.
 if (fields.email.touched) {
-  console.log("The email field is has been edited.");
+  console.log("The email field has been edited.");
 }
 ```
 
 ## Update Multiple Fields
 ```js
-fields = this.form.updateAll({ 
+let fields = this.form.updateAll({ 
   email: 'email@address.com',  
   fullname: 'Email Address' 
 });
 ```
 
-## Update Validation For A Field
+## Update Validator For A Field
 ```js
-fields = this.form.updateAll({ 
+let fields = this.form.updateAll({ 
   email: {value: 'newemail@value.com', validator: null}
 });
 ```
 
 ## Create and Update Form Groups
 ```js
-// Defined form fields.
+// Defined a form group with a single field.
 let fields = {
   users: [
     {
@@ -107,31 +114,33 @@ let fields = {
 this.form = new Form(fields);
 
 // Update Form Group Fields
-const index = 0; // Index of the targetted field in the Form Group `Users`
+const index = 0; // Index of the targetted field in the Form Group `users`
 
-this.form.update({ users: Form.group(index, { name: 'User Name', email: 'User Email' }) })
+// Add a single field to the Form Group `users`. 
+this.form.update({ users: Form.group(index, { name: 'User Name', email: 'User Email' }) });
 ```
+`Form.update(...)` can be called repeatedly to append new fields to the form group. Fields do not have to be of the same object structure when added.
 
 ## Add Or Remove A Field
 ```js
 // Add
-fields = this.form.addField('fieldName', {value: '', validator: null});
+let fields = this.form.addField('fieldName', {value: '', validator: null});
 
 // Remove
-fields = this.form.removeField('fieldName');
+let fields = this.form.removeField('fieldName');
 ```
-Fields can also be removed from a sub form group by specifying an index number as the second parameter.
+Fields can also be removed from a sub form group by specifying an `index number` as the second parameter.
 
 ```js
-const index = 0; // Index of the targetted field in the Form Group `Users`
-fields = this.form.removeField('users', index);
+const index = 0; // Index of the targetted field in the Form Group `users`
+let fields = this.form.removeField('users', index);
 ```
 
-## Reset Form Fields
+## Reset All Form Fields
 ```js
-fields = this.form.resetAll();
+let fields = this.form.resetAll();
 ```
-
+A single field can also be reset using `Form.reset('fieldName')`. Using these methods also resets the `touched` value for each field to false.
 
 ## License
 

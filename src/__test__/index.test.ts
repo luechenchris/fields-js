@@ -1,24 +1,34 @@
 import Form from '../index';
 
-let form = new Form({
+let fields = {
   email: {
     value: null,
     validator: ['email'],
+  },
+  emailConfirmation: {
+    value: null,
+    validator: (text: string) => {
+      return text == 'johndoe@gmail.com';
+    }
   }
-});
+}
+
+let form = new Form(fields);
 
 describe('Form Validation', () => {
-  test('Valid Email', () => {
-    form.update('email', 'johndoe@gmail.com');
-    let { valid } = form.value();
-    expect(valid).toBe(true);
+  test('Valid Field', () => {
+    form.updateAll({ email: 'johndoe@gmail.com', emailConfirmation: 'johndoe@gmail.com' });
+    let { form: fields } = form.value();
+    expect(fields.email.valid).toBe(true);
+    expect(fields.emailConfirmation.valid).toBe(true);
   });
 
-  test('Invalid Email', () => {
+  test('Invalid Field', () => {
     form.update('email', 'johndoegmail.com');
-    let { valid, form: fields } = form.value();
-    expect(valid).toBe(false);
-    expect(fields.email.value).toBe('johndoegmail.com');
+    form.update('emailConfirmation', 'johndoegmail.com');
+    let { form: fields } = form.value();
+    expect(fields.email.valid).toBe(false);
+    expect(fields.emailConfirmation.valid).toBe(false);
   });
 
   test('Form Reset', () => {
@@ -62,10 +72,12 @@ describe('Adding Fields To Form', () => {
 });
 
 describe('Update Form Group', () => {
-  test('Remove A Field', () => {
+  test('Remove Fields', () => {
     form.removeField('email');
+    form.removeField('emailConfirmation');
     let { form: fields } = form.value();
     expect(fields.email).toBeUndefined();
+    expect(fields.emailConfirmation).toBeUndefined();
   });
 
   test('Update Form Group', () => {
