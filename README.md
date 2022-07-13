@@ -94,7 +94,7 @@ let fields = this.form.updateAll({
 
 ## Create and Update Form Groups
 ```js
-// Defined a form group with a single field.
+// Define a form group with multiple fields.
 let fields = {
   users: [
     {
@@ -108,18 +108,18 @@ let fields = {
       }
     }
   ]
-}
+};
 
 // Initialize Fields-JS
 this.form = new Form(fields);
 
 // Update Form Group Fields
-const index = 0; // Index of the targetted field in the Form Group `users`
+const index = 0; // Index of the targeted field in the Form Group `users`
 
 // Add a single field to the Form Group `users`. 
 this.form.update({ users: Form.group(index, { name: 'User Name', email: 'User Email' }) });
 ```
-`Form.update(...)` can be called repeatedly to append new fields to the form group. Fields do not have to be of the same object structure when added.
+`Form.update(...)` can be called repeatedly to append new fields to the form group.
 
 ## Add Or Remove A Field
 ```js
@@ -132,7 +132,7 @@ let fields = this.form.removeField('fieldName');
 Fields can also be removed from a sub form group by specifying an `index number` as the second parameter.
 
 ```js
-const index = 0; // Index of the targetted field in the Form Group `users`
+const index = 0; // Index of the targeted field in the Form Group `users`
 let fields = this.form.removeField('users', index);
 ```
 
