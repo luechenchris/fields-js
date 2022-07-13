@@ -16,29 +16,29 @@ const fields = {
 const form = new Form(fields);
 
 describe('Form Validation', () => {
-  test('Valid Field', () => {
+  test('Invalid Field', () => {
     form.updateAll({
-      email: 'johndoe@gmail.com',
-      emailConfirmation: 'johndoe@gmail.com',
+      email: 'johndoegmail.com',
+      emailConfirmation: null,
     });
     const { form: fields } = form.value();
-    expect(fields.email.valid).toBe(true);
-    expect(fields.emailConfirmation.valid).toBe(true);
-  });
-
-  test('Invalid Field', () => {
-    form.update('email', 'johndoegmail.com');
-    form.update('emailConfirmation', 'johndoegmail.com');
-    const { form: fields } = form.value();
     expect(fields.email.valid).toBe(false);
+    expect(fields.email.touched).toBe(true);
     expect(fields.emailConfirmation.valid).toBe(false);
   });
 
-  test('Form Reset', () => {
-    form.resetAll();
-    const { valid, form: fields } = form.value();
-    expect(valid).toBe(false);
-    expect(fields.email.value).toBe('');
+  test('Valid Field', () => {
+    form.update('email', 'johndoe@gmail.com');
+    form.update('emailConfirmation', 'johndoe@gmail.com');
+    const { form: fields } = form.value();
+    expect(fields.email.valid).toBe(true);
+    expect(fields.email.pristine).toBe(false);
+    expect(fields.emailConfirmation.valid).toBe(true);
+  });
+
+  test('Valid Form', () => {
+    const { valid } = form.value();
+    expect(valid).toBe(true);
   });
 });
 
@@ -48,7 +48,7 @@ describe('Adding Fields To Form', () => {
       {
         name: {
           value: null,
-          validator: ['required'],
+          validator: null,
         },
         email: {
           value: null,
@@ -58,13 +58,14 @@ describe('Adding Fields To Form', () => {
     ]);
     const { form: fields } = form.value();
     expect(fields.users[0].name.value).toBeNull();
+    expect(fields.users[0].name.valid).toBe(true);
   });
 
   test('Add Field To Form Group', () => {
     form.addField('users', {
       name: {
         value: null,
-        validator: ['required'],
+        validator: [new RegExp("^[a-zA-Z'-]+$")],
       },
       email: {
         value: 'invalid email',
@@ -74,17 +75,15 @@ describe('Adding Fields To Form', () => {
     const { form: fields } = form.value();
     expect(fields.users[1].email.value).toBe('invalid email');
   });
+
+  test('Update Field Validator', () => {
+    form.updateAll({ users: Form.group(0, { name: { value: '', validator: 'required' } }) });
+    const { form: fields } = form.value();
+    expect(fields.users[0].name.valid).toBe(false);
+  });
 });
 
-describe('Update Form Group', () => {
-  test('Remove Fields', () => {
-    form.removeField('email');
-    form.removeField('emailConfirmation');
-    const { form: fields } = form.value();
-    expect(fields.email).toBeUndefined();
-    expect(fields.emailConfirmation).toBeUndefined();
-  });
-
+describe('Modify Form Group', () => {
   test('Update Form Group', () => {
     form.update(
       'users',
@@ -101,8 +100,62 @@ describe('Update Form Group', () => {
     expect(fields.users[1].email.value).toBe('jane@mail.com');
   });
 
-  test('Validate Form', () => {
+  test('Remove Fields', () => {
+    form.removeField('emailConfirmation');
+    form.removeField('users', 1);
+    const { form: fields } = form.value();
+    expect(fields.emailConfirmation).toBeUndefined();
+    expect(fields.users[1]).toBeUndefined();
+  });
+
+  test('Valid Form', () => {
     const { valid } = form.value();
     expect(valid).toBe(true);
+  });
+});
+
+describe('Reset Form', () => {
+  test('Reset All Fields', () => {
+    form.resetAll();
+    const { valid, form: fields } = form.value();
+    expect(valid).toBe(false);
+    expect(fields.email.value).toBe('');
+  });
+
+  test('Hydrate Fields', () => {
+    const values = {
+      email: {
+        value: 'invalidemail',
+        validator: ['email'],
+      },
+      users: [
+        {
+          name: {
+            value: 'Jake',
+            validator: 'required',
+          },
+          email: {
+            value: 'jake@mail.com',
+            validator: ['email'],
+          },
+        },
+        {
+          name: {
+            value: 'Matthew',
+            validator: 'required',
+          },
+          email: {
+            value: 'matthew@mail.com',
+            validator: ['email'],
+          },
+        }
+      ]
+    };
+    form.hydrate(values);
+    const { valid, form: fields } = form.value();
+    expect(fields.email.value).toBe('invalidemail');
+    expect(fields.users[0].email.value).toBe('jake@mail.com');
+    expect(fields.users[1].name.value).toBe('Matthew');
+    expect(valid).toBe(false);
   });
 });

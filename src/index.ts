@@ -251,8 +251,8 @@ export default class Form {
    * @param {*} key
    * @returns
    */
-  public reset = (key: string, form = this.formData) => {
-    form[key].value = '';
+  public reset = (key: string, form: any = this.formData) => {
+    form[key]['value'] = '';
     form[key]['pristine'] = true;
     form[key]['touched'] = false;
     form[key]['valid'] = true;
@@ -263,7 +263,7 @@ export default class Form {
    * Resets all form fields.
    * @returns
    */
-  public resetAll = (form = this.formData) => {
+  public resetAll = (form: any = this.formData) => {
     Object.keys(form).forEach((key) => {
       if (Array.isArray(form[key])) {
         form[key].forEach((i: any, index: string | number) => {
@@ -271,10 +271,7 @@ export default class Form {
           form[key][index] = formData;
         });
       } else {
-        form[key].value = '';
-        form[key]['pristine'] = true;
-        form[key]['touched'] = false;
-        form[key]['valid'] = true;
+        ({ form } = this.reset(key, form));
       }
     });
     return { form };
@@ -289,13 +286,15 @@ export default class Form {
     if (isDefined(entity)) {
       for (const [key, value] of Object.entries(entity)) {
         if (isDefined(form[key])) {
-          if (Array.isArray(form[key])) {
-            form[key].forEach((i: any, index: string | number) => {
-              const { form: formData } = this.hydrate(value, i);
+          // Ensure that both the existing form key value and the supplied value are Arrays
+          if (Array.isArray(form[key]) && Array.isArray(value)) {
+            value.forEach((i: any, index: string | number) => {
+              const formData = this.hydrate(value, i);
               form[key][index] = formData;
             });
           } else {
-            form[key].value = value;
+            form[key]['value'] = entity[key].value;
+            form[key]['validator'] = entity[key].validator;
             form[key]['pristine'] = true;
           }
         }
