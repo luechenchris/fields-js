@@ -62,9 +62,10 @@ describe('Adding Fields To Form', () => {
 });
 
 describe('Update Form Group', () => {
-  beforeAll(() => {
-    // Remove email field
+  test('Remove A Field', () => {
     form.removeField('email');
+    let { form: fields } = form.value();
+    expect(fields.email).toBeUndefined();
   });
 
   test('Update Form Group', () => {
