@@ -1,6 +1,6 @@
 {
   "name": "fields-js",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "A very simple JS package for form validation.",
   "main": "/lib/commonjs/index.js",
   "types": "lib/typescript/index.d.ts",
