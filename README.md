@@ -20,7 +20,7 @@ yarn add fields-js
 import Form from 'fields-js';
 
 // Define your form fields. You can also save the object to state.
-let fields: {
+let fields = {
   email: {
     value: '',
     validator: ['email'],
@@ -44,14 +44,14 @@ let fields: {
 // Initialize Fields-JS
 this.form = new Form(fields);
 
+// Update a field's value.
+fields = this.form.update('email', 'johndoe@mail.com');
+
 // Validate the entire form.
 let { form, valid } = this.form.value();
 
 // Update scoped variable (not necessary but it's nice to do.)
 fields = form;
-
-// Update a field's value.
-fields = this.form.update('email', 'johndoe@mail.com');
 
 if (valid ) { 
   console.log("The Form is valid.")
@@ -85,6 +85,33 @@ fields = this.form.updateAll({
 });
 ```
 
+## Create and Update Form Groups
+```js
+// Defined form fields.
+let fields = {
+  users: [
+    {
+      name: {
+        value: null,
+        validator: ['required'],
+      },
+      email: {
+        value: null,
+        validator: ['email'],
+      }
+    }
+  ]
+}
+
+// Initialize Fields-JS
+this.form = new Form(fields);
+
+// Update Form Group Fields
+const index = 0; // Index of the targetted field in the Form Group `Users`
+
+this.form.update({ users: Form.group(index, { name: 'User Name', email: 'User Email' }) })
+```
+
 ## Add Or Remove A Field
 ```js
 // Add
@@ -94,8 +121,10 @@ fields = this.form.addField('fieldName', {value: '', validator: null});
 fields = this.form.removeField('fieldName');
 ```
 Fields can also be removed from a sub form group by specifying an index number as the second parameter.
+
 ```js
-fields = this.form.removeField('Sub-Form-Group-Name', 2);
+const index = 0; // Index of the targetted field in the Form Group `Users`
+fields = this.form.removeField('users', index);
 ```
 
 ## Reset Form Fields
