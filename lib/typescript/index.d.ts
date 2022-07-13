@@ -96,23 +96,15 @@ export default class Form {
      * @param {*} key
      * @returns
      */
-    reset: (key: string, form?: {
-        [s: string]: any;
-    }) => {
-        form: {
-            [s: string]: any;
-        };
+    reset: (key: string, form?: any) => {
+        form: any;
     };
     /**
      * Resets all form fields.
      * @returns
      */
-    resetAll: (form?: {
-        [s: string]: any;
-    }) => {
-        form: {
-            [s: string]: any;
-        };
+    resetAll: (form?: any) => {
+        form: any;
     };
     /**
      * Populates all form fields without having to reinitialize the form class.

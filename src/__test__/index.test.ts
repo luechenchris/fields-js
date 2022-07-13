@@ -77,7 +77,9 @@ describe('Adding Fields To Form', () => {
   });
 
   test('Update Field Validator', () => {
-    form.updateAll({ users: Form.group(0, { name: { value: '', validator: 'required' } }) });
+    form.updateAll({
+      users: Form.group(0, { name: { value: '', validator: 'required' } }),
+    });
     const { form: fields } = form.value();
     expect(fields.users[0].name.valid).toBe(false);
   });
@@ -148,8 +150,8 @@ describe('Reset Form', () => {
             value: 'matthew@mail.com',
             validator: ['email'],
           },
-        }
-      ]
+        },
+      ],
     };
     form.hydrate(values);
     const { valid, form: fields } = form.value();
