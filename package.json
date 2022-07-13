@@ -25,7 +25,13 @@
   },
   "devDependencies": {
     "@types/jest": "^28.1.4",
+    "@typescript-eslint/eslint-plugin": "^5.30.6",
+    "@typescript-eslint/parser": "^5.30.6",
+    "eslint": "^7.32.0",
+    "eslint-config-prettier": "^7.0.0",
+    "eslint-plugin-prettier": "^3.1.3",
     "jest": "^28.1.2",
+    "prettier": "^2.0.5",
     "release-it": "^15.1.1",
     "ts-jest": "^28.0.5",
     "typescript": "^4.7.4"
@@ -62,5 +68,45 @@
     "github": {
       "release": true
     }
+  },
+  "eslintConfig": {
+    "root": true,
+    "extends": [
+      "prettier",
+      "eslint:recommended",
+      "plugin:@typescript-eslint/eslint-recommended",
+      "plugin:@typescript-eslint/recommended"
+    ],
+    "parser": "@typescript-eslint/parser",
+    "plugins": [
+      "@typescript-eslint",
+      "prettier"
+    ],
+    "parserOptions": {
+      "requireConfigFile": false
+    },
+    "rules": {
+      "prettier/prettier": [
+        "error",
+        {
+          "quoteProps": "consistent",
+          "singleQuote": true,
+          "tabWidth": 2,
+          "trailingComma": "es5",
+          "useTabs": false
+        }
+      ]
+    }
+  },
+  "eslintIgnore": [
+    "node_modules/",
+    "lib/"
+  ],
+  "prettier": {
+    "quoteProps": "consistent",
+    "singleQuote": true,
+    "tabWidth": 2,
+    "trailingComma": "es5",
+    "useTabs": false
   }
 }

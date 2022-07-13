@@ -54,12 +54,12 @@ export default class Form {
         [s: string]: any;
     }) => any;
     /**
-      * Updates multiple fields at once and supports applying additional form config.
-      * Accepts {key: {validator: ValidatorObject}} to update field validation.
-      * @param entity
-      * @param form
-      * @returns
-      */
+     * Updates multiple fields at once and supports applying additional form config.
+     * Accepts {key: {validator: ValidatorObject}} to update field validation.
+     * @param entity
+     * @param form
+     * @returns
+     */
     updateAll: (entity: {
         [s: string]: any;
     }, form?: {
